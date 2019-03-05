@@ -5,7 +5,7 @@
 
 /* 
 a::, argument optional, -a200
-b: , argument must, -b 100, -b1---, (-b=100 false)
+b: , argument must, -b 100, -b100, (-b=100 false)
 c: , same as b:
 d  , no argument, -d
 */
