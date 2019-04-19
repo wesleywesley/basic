@@ -3,6 +3,7 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/list.h>
+#include <linux/delay.h>
 
 MODULE_LICENSE("Dual BSD/GPL");
 
@@ -21,6 +22,11 @@ static int list_init(void)
 	int i;
 
 	LIST_HEAD(list_head);
+
+	printk(KERN_ALERT "Before msleep\n");
+	msleep(1000*10);
+	printk(KERN_ALERT "After msleep\n");
+
 
 	if (list_empty(&list_head))
 		printk(KERN_ALERT "list init\n");	
