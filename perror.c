@@ -24,6 +24,12 @@ int main()
 	errno = 6;
 	perror("errno = 6");	
 
+	errno = 8;
+	perror("errno = 8");
+
+	errno = ENOEXEC;
+	perror("errno = ENOEXEC");
+
 	errno = EBUSY;
 	printf("EBUSY %d : %d\n", errno, EBUSY);
 	perror("errno = EBUSY");	
