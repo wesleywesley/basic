@@ -1,0 +1,14 @@
+sudo rmmod ntb_tool
+echo 1
+sudo rmmod ntb_pingpong
+echo 2
+sudo rmmod ntb_perf
+echo 3
+sudo rmmod ntb_netdev
+echo 4
+sudo rmmod ntb_transport
+echo 5
+sudo rmmod ntb_hw_switchtec
+echo 6
+sudo rmmod switchtec
+echo 7
