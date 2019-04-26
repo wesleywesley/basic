@@ -14,8 +14,12 @@ int main(int argc, char *argv[])
 	struct stat stat;
 	void *map;
 	ssize_t msize;
-	uint32_t db_offset = 0x74000;
-	uint64_t db_bit = 0x100000000;
+	//host #1 partition #0
+	//uint32_t db_offset = 0x74000;
+	//uint64_t db_bit = 0x100000000;
+	//host #2 partition #1
+	uint32_t db_offset = 0x78000;
+	uint64_t db_bit = 0x1;
 	uint64_t *db_addr;
 	unsigned long i;
 	unsigned long cnt;
