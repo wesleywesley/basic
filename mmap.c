@@ -24,4 +24,6 @@ int main()
 	}
 
 	fprintf(stdout, "%x\n", *(uint32_t *)map);
+
+	munmap(map, 4096);
 }
