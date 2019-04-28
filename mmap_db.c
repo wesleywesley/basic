@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	struct stat stat;
 	void *map;
 	ssize_t msize;
-	char partition[16];
+	char partition[16] = {0};
 	uint32_t db_offset;
 	uint64_t db_bit;
 	uint64_t *db_addr;
