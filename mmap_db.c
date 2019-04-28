@@ -14,31 +14,51 @@ int main(int argc, char *argv[])
 	struct stat stat;
 	void *map;
 	ssize_t msize;
-	//host #1 partition #0
-	//uint32_t db_offset = 0x74000;
-	//uint64_t db_bit = 0x100000000;
-	//host #2 partition #1
-	uint32_t db_offset = 0x78000;
-	uint64_t db_bit = 0x1;
+	char partition[16];
+	uint32_t db_offset;
+	uint64_t db_bit;
 	uint64_t *db_addr;
 	unsigned long i;
 	unsigned long cnt;
 	uint64_t flush_mb;
 
 	//for (i = 0; i < argc; i++)
-	//	printf("argv[%d]:%s\n", i, argv[i]);
+	//	fprintf(stdout, "argv[%d]:%s\n", i, argv[i]);
 
 	if (argc < 2) {
-		printf("usage: ./mmap_db <cnt>\n");
+		fprintf(stdout, "usage: ./mmap_db <cnt>\n");
 		return -1;
 	}
 
 	cnt = strtol(argv[1], NULL, 0);
-	printf("cnt: %ld\n", cnt);
+	fprintf(stdout, "cnt: %ld\n", cnt);
+
+	fd = open("/sys/class/switchtec/switchtec0/partition", O_RDONLY);
+	if (fd < 0) {
+		fprintf(stderr, "@@@ open: partition\n");
+		return -1;
+	}
+	ret = read(fd, partition, sizeof(partition));
+	if (ret < 0) {
+		fprintf(stderr, "@@@ read: partition\n");
+		close(fd);
+		return -1;
+	}
+	close(fd);
+
+	if (partition[0] == '0') {
+		fprintf(stderr, "partition 0\n");
+		db_offset = 0x74000;
+		db_bit = 0x100000000;
+	} else {
+		fprintf(stderr, "partition 1\n");
+		db_offset = 0x78000;
+		db_bit = 0x1;
+	}
 
 	fd = open("/sys/class/switchtec/switchtec0/device/resource0", O_RDWR);
 	if (fd < 0) {
-		fprintf(stderr, "@@@ open\n");
+		fprintf(stderr, "@@@ open: resource0\n");
 		return -1;
 	}
 
@@ -75,7 +95,7 @@ int main(int argc, char *argv[])
 		//2. not work
 		//flush_mb = *db_addr;
 		//3. not work
-		//printf("%d\n", i);
+		//fprintf(stdout, "%d\n", i);
 		*db_addr = db_bit;
 	}
 
