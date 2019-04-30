@@ -26,17 +26,21 @@ int main(int argc, char *argv[])
 	int i, j;
 	unsigned long cnt;
 	struct shared_mw shared_mw;
+	int read;
 
 	for (i = 0; i < argc; i++)
 		fprintf(stdout, "argv[%d]:%s\n", i, argv[i]);
 
-	if (argc < 2) {
-		fprintf(stderr, "usage ./mmap <cnt>\n");
+	if (argc < 3) {
+		fprintf(stderr, "usage ./mmap <cnt> <r/w>\n");
 		return -1;
 	}
 
 	cnt = strtol(argv[1], NULL, 0);
 	fprintf(stdout, "cnt: %ld\n", cnt);
+
+	read = argv[2][0] == 'r' ? 1 : 0;
+	fprintf(stdout, "%s\n", read ? "read" : "write");
 
 	fd = open("/sys/class/switchtec/switchtec0/device/resource2_wc", O_RDWR);
 	if (fd < 0) {
@@ -53,14 +57,18 @@ int main(int argc, char *argv[])
 	}
 
 	for (i = 0; i < cnt; i++) {
-		memcpy(&shared_mw, map, sizeof(shared_mw));
+		if (read) {
+			memcpy(&shared_mw, map, sizeof(shared_mw));
 
-		fprintf(stdout, "magic %x\n", shared_mw.magic);
-		//fprintf(stdout, "link_sta %x\n", shared_mw.link_sta);
-		//fprintf(stdout, "partition %x\n", shared_mw.partition_id);
+			fprintf(stdout, "magic %x\n", shared_mw.magic);
+			//fprintf(stdout, "link_sta %x\n", shared_mw.link_sta);
+			//fprintf(stdout, "partition %x\n", shared_mw.partition_id);
 
-		for (j = 0; j < ARRAY_SIZE(shared_mw.mw_size); j++) {
-			//fprintf(stdout, "mw_size[%d] %lx\n", j, shared_mw.mw_size[j]);
+			for (j = 0; j < ARRAY_SIZE(shared_mw.mw_size); j++) {
+				//fprintf(stdout, "mw_size[%d] %lx\n", j, shared_mw.mw_size[j]);
+			}
+		} else {
+			memcpy(map, &shared_mw, sizeof(shared_mw));
 		}
 	}
 
