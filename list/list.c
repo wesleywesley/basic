@@ -21,11 +21,29 @@ static int list_init(void)
 	struct student *student;
 	int i;
 
+	unsigned int int_bit = 0x80000000;
+	long long_bit = 0x8000000000000000;
+	long val = 3;
+
 	LIST_HEAD(list_head);
 
 	printk(KERN_ALERT "Before msleep\n");
-	msleep(1000*10);
+	//msleep(1000*10);
 	printk(KERN_ALERT "After msleep\n");
+
+	printk(KERN_ALERT "ffs int_bit 0x80000000 : %d\n", ffs(int_bit));
+	printk(KERN_ALERT "__ffs int_bit 0x80000000 : %ld\n", __ffs(int_bit));
+	printk(KERN_ALERT "ffs long_bit 0x8000000000000000 : %d\n", ffs(long_bit));
+	printk(KERN_ALERT "__ffs long_bit 0x8000000000000000 : %ld\n", __ffs(long_bit));
+	printk(KERN_ALERT "ffs val 3 : %d\n", ffs(val));
+	printk(KERN_ALERT "__ffs  val 3: %ld\n", __ffs(val));
+	printk(KERN_ALERT "------\n");
+	printk(KERN_ALERT "fls int_bit 0x80000000 : %d\n", fls(int_bit));
+	printk(KERN_ALERT "__fls int_bit 0x80000000 : %ld\n", __fls(int_bit));
+	printk(KERN_ALERT "fls long_bit 0x8000000000000000 : %d\n", fls(long_bit));
+	printk(KERN_ALERT "__fls long_bit 0x8000000000000000 : %ld\n", __fls(long_bit));
+	printk(KERN_ALERT "fls val 3 : %d\n", fls(val));
+	printk(KERN_ALERT "__fls  val 3: %ld\n", __fls(val));
 
 
 	if (list_empty(&list_head))
