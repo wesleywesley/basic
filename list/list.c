@@ -21,9 +21,10 @@ static int list_init(void)
 	struct student *student;
 	int i;
 
-	unsigned int int_bit = 0x80000000;
-	long long_bit = 0x8000000000000000;
-	long val = 3;
+	uint32_t int_bit = 0x80000000;
+	uint64_t long_bit = 0x8000000000000000;
+	uint64_t val = 3;
+	uint64_t zero = 0;
 
 	LIST_HEAD(list_head);
 
@@ -37,6 +38,8 @@ static int list_init(void)
 	printk(KERN_ALERT "__ffs long_bit 0x8000000000000000 : %ld\n", __ffs(long_bit));
 	printk(KERN_ALERT "ffs val 3 : %d\n", ffs(val));
 	printk(KERN_ALERT "__ffs  val 3: %ld\n", __ffs(val));
+	printk(KERN_ALERT "ffs val 0 : %d\n", ffs(zero));
+	printk(KERN_ALERT "__ffs  val 0: %ld\n", __ffs(zero));
 	printk(KERN_ALERT "------\n");
 	printk(KERN_ALERT "fls int_bit 0x80000000 : %d\n", fls(int_bit));
 	printk(KERN_ALERT "__fls int_bit 0x80000000 : %ld\n", __fls(int_bit));
@@ -44,6 +47,10 @@ static int list_init(void)
 	printk(KERN_ALERT "__fls long_bit 0x8000000000000000 : %ld\n", __fls(long_bit));
 	printk(KERN_ALERT "fls val 3 : %d\n", fls(val));
 	printk(KERN_ALERT "__fls  val 3: %ld\n", __fls(val));
+	printk(KERN_ALERT "fls64  val 3: %d\n", fls64(val));
+	printk(KERN_ALERT "fls val 0 : %d\n", fls(zero));
+	printk(KERN_ALERT "__fls  val 0: %ld\n", __fls(zero));
+	printk(KERN_ALERT "fls64  val 0: %d\n", fls64(zero));
 
 
 	if (list_empty(&list_head))
